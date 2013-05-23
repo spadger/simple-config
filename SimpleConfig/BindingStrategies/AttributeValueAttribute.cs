@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Reflection;
 using System.Xml;
+using SimpleConfig.Helpers;
 
 namespace SimpleConfig.BindingStrategies
 {
@@ -16,39 +18,47 @@ namespace SimpleConfig.BindingStrategies
 
         public override IBindingStrategy MappingStrategy
         {
-            get { return new AttributeValueMappingStrategy(); }
+            get { return new AttributeValueMappingStrategy(AttributeName); }
         }
     }
 
     public class AttributeValueMappingStrategy : IBindingStrategy
     {
-        public bool Do<T>(T destination, XmlElement element, XmlElement allConfig)
-        {
-            throw new NotImplementedException();
-        }
-    }
+        public AttributeValueMappingStrategy(){}
 
-    [AttributeUsage(AttributeTargets.Property)]
-    public class CustomBindingStrtategyAttribute : BaseBindingAttribute
-    {
-        public CustomBindingStrtategyAttribute(Type mappingStrategyType)
+        public AttributeValueMappingStrategy(string attributeName)
         {
-            this.mappingStrategyType = mappingStrategyType;
+            AttributeName = attributeName;
         }
 
-        private Type mappingStrategyType;
+        public string AttributeName { get; private set; }
 
-        public override IBindingStrategy MappingStrategy
+        public bool Map(object destinationObject, PropertyInfo destinationProperty, XmlElement element, XmlElement allConfig, ConfigMapper mapper)
         {
-            get
+            var attributeValue = element.GetAttributeValue(AttributeName ??  destinationProperty.Name);
+
+            if (attributeValue == null)
             {
-                var result = Activator.CreateInstance(mappingStrategyType) as IBindingStrategy;
-                if (result ==null)
-                {
-                    throw new ConfigMappingException("Custom mapping strategy is not a mpaping strategy: {0}", mappingStrategyType.FullName);
-                }
-                return result;
+                return false;
             }
+
+            var destinationPropertyType = destinationProperty.PropertyType;
+
+            if (typeof(IConvertible).IsAssignableFrom(destinationPropertyType))
+            {
+                var value = Convert.ChangeType(attributeValue, destinationPropertyType);
+                destinationProperty.SetValue(destinationObject, value);
+                return true;
+            }
+
+            if (destinationPropertyType.IsEnum)
+            {
+                var value = Enum.Parse(destinationPropertyType, attributeValue);
+                destinationProperty.SetValue(destinationObject, value);
+                return true;
+            }
+
+            return false;
         }
     }
 }

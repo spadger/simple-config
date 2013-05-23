@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Reflection;
 using System.Xml;
+using SimpleConfig.Helpers;
 
 namespace SimpleConfig.BindingStrategies
 {
@@ -16,17 +18,34 @@ namespace SimpleConfig.BindingStrategies
 
         public override IBindingStrategy MappingStrategy
         {
-            get { throw new NotImplementedException(); }
+            get { return new ElementValueMappingStrategy(ElementName); }
         }
     }
 
-
-
     public class ElementValueMappingStrategy : IBindingStrategy
     {
-        public bool Do<T>(T destination, XmlElement element, XmlElement allConfig)
+        public ElementValueMappingStrategy(){}
+
+        public ElementValueMappingStrategy(string elementName)
         {
-            throw new NotImplementedException();
+            ElementName = elementName;
+        }
+
+        public string ElementName { get; private set; }
+
+
+        public bool Map(object destinationObject, PropertyInfo destinationProperty, XmlElement element, XmlElement allConfig, ConfigMapper mapper)
+        {
+            var childElement = element.GetElementNamed(ElementName ?? destinationProperty.Name);
+
+            if (childElement == null)
+            {
+                return false;
+            }
+
+
+
+            return false;
         }
     }
 }

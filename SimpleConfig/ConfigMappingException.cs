@@ -8,16 +8,13 @@ namespace SimpleConfig
         public ConfigMappingException()
         {}
 
-        public ConfigMappingException(string message): base(message)
-        { }
-
-        public ConfigMappingException(string messageTemplate, params object[] tokens):this(string.Format(messageTemplate, tokens))
+        public ConfigMappingException(string messageTemplate, params object[] tokens):base(string.Format(messageTemplate, tokens))
         { }
 
         public ConfigMappingException(string message, string filename, int line) : base(message, filename, line)
         {}
 
-        public ConfigMappingException(string message, XmlNode node) : base(message, node)
+        public ConfigMappingException(XmlNode node, string messageTemplate, params object[] tokens): base(string.Format(messageTemplate, tokens), node)
         {}
     }
 }

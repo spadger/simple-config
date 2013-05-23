@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Xml;
 using SimpleConfig.Helpers;
@@ -25,58 +26,29 @@ namespace SimpleConfig
         {
             var type = destination.GetType();
             
-            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public))
+            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(x=>x.CanWrite))
             {
-                if (!property.CanWrite)
-                {
-                    continue;
-                }
-
-                PopulateProperty(property, element);
+                PopulateProperty(destination, property, element);
             }
         }
 
-        private void PopulateProperty(PropertyInfo property, XmlElement element)
+        private void PopulateProperty(object destinationInstance, PropertyInfo destinationProperty, XmlElement element)
         {
-            var type = property.PropertyType;
-
-            if (type.CanBeInstantiated()==false)
-            {
-                throw new ConfigMappingException("It is not possible to create a new instance of {0} for the {1} property.", type.FullName, property.Name);
-            }
+            var mappingStrategies = destinationProperty.GetMappingStrategies();
 
             
+            if (mappingStrategies==null)
+            {
+                throw new ConfigMappingException("It is not possible to map property {0} (of type {1}) because no mapping strategy could be found", destinationProperty.Name, destinationProperty.PropertyType.FullName);
+            }
+
+            foreach (var strategy in mappingStrategies)
+            {
+                if (strategy.Map(destinationInstance, destinationProperty, element, _configDocument, this))
+                {
+                    break;
+                }
+            }
         }
     }
 }
-
-
-
-/*
-    private IObjectCreationStrategy GetObjectCreationStrategyFor(Type objectType)
-    {
-        if (objectType.IsPrimitive || objectType == typeof(string))
-        {
-            return null;
-        }
-
-        var customCreationStrategy = objectType.GetCustomAttributes<BaseObjectCreationAttribute>()
-                                            .Select(x => x.ObjectCreationStrategy)
-                                            .FirstOrDefault(x => x != null);
-
-        if (customCreationStrategy != null)
-        {
-            return customCreationStrategy;
-        }
-            
-        var hasDefaultConstructor = objectType.GetConstructors(BindingFlags.Instance | BindingFlags.Public)
-                                                .Any(x => x.GetParameters().Any() == false);
-            
-        if (hasDefaultConstructor)
-        {
-            return new DefaultObjectCreationStrategy();
-        }
-
-        throw new ConfigMappingException("Could not instantiate a new instance of {0} because it does not have a default constructor, and the type has no [ObjectCreation] attribute.", objectType.FullName);
-    }
-*/

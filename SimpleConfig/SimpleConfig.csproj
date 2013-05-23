@@ -38,12 +38,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingStrategies\ComplexTypeBindingStrategy.cs" />
+    <Compile Include="BindingStrategies\CustomBindingStrtategyAttribute.cs" />
     <Compile Include="BindingStrategies\EnumerableBindingStrategy.cs" />
-    <Compile Include="BindingStrategies\NOOPBindingStrategy.cs" />
     <Compile Include="ConfigMapper.cs" />
     <Compile Include="ConfigMappingException.cs" />
     <Compile Include="BindingStrategies\BaseBindingAttribute.cs" />
-    <Compile Include="BindingStrategies\DoNotBindAttribute.cs" />
     <Compile Include="BindingStrategies\ElementValueAttribute.cs" />
     <Compile Include="BindingStrategies\AttributeValueAttribute.cs" />
     <Compile Include="BindingStrategies\IBindingStrategy.cs" />
