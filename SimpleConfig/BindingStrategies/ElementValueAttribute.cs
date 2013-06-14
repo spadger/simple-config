@@ -43,7 +43,23 @@ namespace SimpleConfig.BindingStrategies
                 return false;
             }
 
+            var elementValue = childElement.InnerText;
 
+            var destinationPropertyType = destinationProperty.PropertyType;
+
+            if (typeof(IConvertible).IsAssignableFrom(destinationPropertyType))
+            {
+                var value = Convert.ChangeType(elementValue, destinationPropertyType);
+                destinationProperty.SetValue(destinationObject, value);
+                return true;
+            }
+
+            if (destinationPropertyType.IsEnum)
+            {
+                var value = Enum.Parse(destinationPropertyType, elementValue);
+                destinationProperty.SetValue(destinationObject, value);
+                return true;
+            }
 
             return false;
         }
