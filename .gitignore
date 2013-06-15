@@ -33,9 +33,8 @@ x64/
 *.tlh
 *.tmp
 *.log
-*.vspscc
-*.vssscc
 .builds
+.nuget
 
 # Visual C++ cache files
 ipch/
@@ -48,9 +47,6 @@ ipch/
 *.psess
 *.vsp
 *.vspx
-
-# Guidance Automation Toolkit
-*.gpState
 
 # ReSharper is a .NET coding add-in
 _ReSharper*
