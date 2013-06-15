@@ -7,13 +7,18 @@ namespace SimpleConfig.Tests.BindingStrategies
     [TestFixture]
     public class SimpleElementBindingTests
     {
+        private ConfigMapper ConfigMapperFor(string xml)
+        {
+            var doc = new XmlDocument();
+            doc.LoadXml(xml);
+            return new ConfigMapper(doc.DocumentElement);
+        }
+
         [Test]
         public void ElementBindingShouldBindStrings()
         {
-            var xml = new XmlDocument();
-            xml.LoadXml(@"<bob><Username>bob</Username></bob>");
+            var configMapper = ConfigMapperFor(@"<bob><Username>bob</Username></bob>");
 
-            var configMapper = new ConfigMapper(xml.DocumentElement);
             var result = (User)configMapper.GetObjectFromXml(typeof(User));
             result.Username.Should().Be("bob");
         }
@@ -21,10 +26,8 @@ namespace SimpleConfig.Tests.BindingStrategies
         [Test]
         public void ElementBindingShouldBindInts()
         {
-            var xml = new XmlDocument();
-            xml.LoadXml(@"<bob><Age>3</Age></bob>");
+            var configMapper = ConfigMapperFor(@"<bob><Age>3</Age></bob>");
 
-            var configMapper = new ConfigMapper(xml.DocumentElement);
             var result = (User)configMapper.GetObjectFromXml(typeof(User));
             result.Age.Should().Be(3);
         }
@@ -32,10 +35,8 @@ namespace SimpleConfig.Tests.BindingStrategies
         [Test]
         public void ElementBindingShouldBindDecimals()
         {
-            var xml = new XmlDocument();
-            xml.LoadXml(@"<bob><Height>1.8</Height></bob>");
+            var configMapper = ConfigMapperFor(@"<bob><Height>1.8</Height></bob>");
 
-            var configMapper = new ConfigMapper(xml.DocumentElement);
             var result = (User)configMapper.GetObjectFromXml(typeof(User));
             result.Height.Should().Be(1.8m);
         }
@@ -43,11 +44,8 @@ namespace SimpleConfig.Tests.BindingStrategies
         [Test]
         public void ElementBindingShouldBindFloats()
         {
-            var xml = new XmlDocument();
-            xml.LoadXml(@"<bob><FavouriteNumber>1234567890123.45</FavouriteNumber></bob>");
+            var configMapper = ConfigMapperFor(@"<bob><FavouriteNumber>1234567890123.45</FavouriteNumber></bob>");
 
-
-            var configMapper = new ConfigMapper(xml.DocumentElement);
             var result = (User)configMapper.GetObjectFromXml(typeof(User));
             result.FavouriteNumber.Should().Be(1234567890123.45f);
         }
@@ -55,10 +53,8 @@ namespace SimpleConfig.Tests.BindingStrategies
         [Test]
         public void ElementBindingShouldBindEnumsByCastingToInts()
         {
-            var xml = new XmlDocument();
-            xml.LoadXml(@"<bob><UserType>1</UserType></bob>");
+            var configMapper = ConfigMapperFor(@"<bob><UserType>1</UserType></bob>");
 
-            var configMapper = new ConfigMapper(xml.DocumentElement);
             var result = (User)configMapper.GetObjectFromXml(typeof(User));
             result.UserType.Should().Be(UserType.Enhanced);
         }
@@ -66,10 +62,8 @@ namespace SimpleConfig.Tests.BindingStrategies
         [Test]
         public void ElementBindingShouldBindEnumsByMatchingStrings()
         {
-            var xml = new XmlDocument();
-            xml.LoadXml(@"<bob><UserType>Enhanced</UserType></bob>");
+            var configMapper = ConfigMapperFor(@"<bob><UserType>Enhanced</UserType></bob>");
 
-            var configMapper = new ConfigMapper(xml.DocumentElement);
             var result = (User)configMapper.GetObjectFromXml(typeof(User));
             result.UserType.Should().Be(UserType.Enhanced);
         }
@@ -77,10 +71,8 @@ namespace SimpleConfig.Tests.BindingStrategies
         [Test]
         public void ElementBindingShouldBeCaseInsensitive()
         {
-            var xml = new XmlDocument();
-            xml.LoadXml(@"<bob><favouriteNUMBER>1234567890123.45</favouriteNUMBER></bob>");
+            var configMapper = ConfigMapperFor(@"<bob><favouriteNUMBER>1234567890123.45</favouriteNUMBER></bob>");
 
-            var configMapper = new ConfigMapper(xml.DocumentElement);
             var result = (User)configMapper.GetObjectFromXml(typeof(User));
             result.FavouriteNumber.Should().Be(1234567890123.45f);
         }

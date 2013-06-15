@@ -41,7 +41,7 @@ namespace SimpleConfig.Helpers
 
             if (@this.IsComplexType())
             {
-                return new[] { new EnumerableBindingStrategy() };
+                return new[] { new ComplexTypeBindingStrategy(),  };
             }
 
             return null;

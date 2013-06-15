@@ -38,7 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingStrategies\ComplexTypeBindingStrategy.cs" />
-    <Compile Include="BindingStrategies\CustomBindingStrtategyAttribute.cs" />
+    <Compile Include="BindingStrategies\CustomBindingStrategyAttribute.cs" />
     <Compile Include="BindingStrategies\EnumerableBindingStrategy.cs" />
     <Compile Include="ConfigMapper.cs" />
     <Compile Include="ConfigMappingException.cs" />

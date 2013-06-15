@@ -3,9 +3,9 @@
 namespace SimpleConfig.BindingStrategies
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class CustomBindingStrtategyAttribute : BaseBindingAttribute
+    public class CustomBindingStrategyAttribute : BaseBindingAttribute
     {
-        public CustomBindingStrtategyAttribute(Type mappingStrategyType)
+        public CustomBindingStrategyAttribute(Type mappingStrategyType)
         {
             MappingStrategyType = mappingStrategyType;
         }

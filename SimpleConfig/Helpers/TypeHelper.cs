@@ -34,7 +34,7 @@ namespace SimpleConfig.Helpers
 
         public static bool IsComplex(this Type @this)
         {
-            return @this.IsClass && @this != typeof(string);
+            return @this.IsInterface || (@this.IsClass && @this != typeof(string));
         }
 
         public static bool IsEnumerable(this Type @this)

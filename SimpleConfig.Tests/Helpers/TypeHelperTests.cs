@@ -94,9 +94,9 @@ namespace SimpleConfig.Tests.Helpers
         [TestCase(typeof(int), false)]
         [TestCase(typeof(SomeEnum), false)]
         [TestCase(typeof(Person), true)]
-        public void IsComplex_ShouldDetermineWhetherGivenTypesIsComplex(Type type, bool isEnumerable)
+        public void IsComplex_ShouldDetermineWhetherGivenTypesIsComplex(Type type, bool isComplex)
         {
-            type.IsComplex().Should().Be(isEnumerable);
+            type.IsComplex().Should().Be(isComplex);
         }
     }
 

@@ -47,7 +47,9 @@
   <ItemGroup>
     <Compile Include="BindingStrategies\SimpleAttributeBindingTests.cs" />
     <Compile Include="BindingStrategies\SimpleElementBindingTests.cs" />
+    <Compile Include="Helpers\PropertyHelperTests.cs" />
     <Compile Include="Helpers\TypeHelperTests.cs" />
+    <Compile Include="Helpers\XmlElementHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -63,9 +65,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\TypeHelper\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
