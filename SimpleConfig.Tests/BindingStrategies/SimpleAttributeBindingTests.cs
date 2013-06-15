@@ -2,16 +2,16 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace SimpleConfig.Tests
+namespace SimpleConfig.Tests.BindingStrategies
 {
     [TestFixture]
-    public class SimpleElementBindingTests
+    public class SimpleAttributeBindingTests
     {
         [Test]
-        public void AttributeStringPropertyBindingShouldBindStrings()
+        public void AttributeBindingShouldBindStrings()
         {
             var xml = new XmlDocument();
-            xml.LoadXml(@"<bob><Username>bob</Username></bob>");
+            xml.LoadXml(@"<bob Username=""bob"" />");
 
             var configMapper = new ConfigMapper(xml.DocumentElement);
             var result = (User)configMapper.GetObjectFromXml(typeof(User));
@@ -19,10 +19,10 @@ namespace SimpleConfig.Tests
         }
 
         [Test]
-        public void AttributeStringPropertyBindingShouldBindInts()
+        public void AttributeBindingShouldBindInts()
         {
             var xml = new XmlDocument();
-            xml.LoadXml(@"<bob><Age>3</Age></bob>");
+            xml.LoadXml(@"<bob Age=""3"" />");
 
             var configMapper = new ConfigMapper(xml.DocumentElement);
             var result = (User)configMapper.GetObjectFromXml(typeof(User));
@@ -30,10 +30,10 @@ namespace SimpleConfig.Tests
         }
 
         [Test]
-        public void AttributeStringPropertyBindingShouldBindDecimals()
+        public void AttributeBindingShouldBindDecimals()
         {
             var xml = new XmlDocument();
-            xml.LoadXml(@"<bob><Height>1.8</Height></bob>");
+            xml.LoadXml(@"<bob Height=""1.8"" />");
 
             var configMapper = new ConfigMapper(xml.DocumentElement);
             var result = (User)configMapper.GetObjectFromXml(typeof(User));
@@ -41,11 +41,10 @@ namespace SimpleConfig.Tests
         }
 
         [Test]
-        public void AttributeStringPropertyBindingShouldBindFloats()
+        public void AttributeBindingShouldBindFloats()
         {
             var xml = new XmlDocument();
-            xml.LoadXml(@"<bob><FavouriteNumber>1234567890123.45</FavouriteNumber></bob>");
-
+            xml.LoadXml(@"<bob FavouriteNumber=""1234567890123.45"" />");
 
             var configMapper = new ConfigMapper(xml.DocumentElement);
             var result = (User)configMapper.GetObjectFromXml(typeof(User));
@@ -53,22 +52,53 @@ namespace SimpleConfig.Tests
         }
 
         [Test]
+        public void AttributeBindingShouldBindEnumsByCastingToInts()
+        {
+            var xml = new XmlDocument();
+            xml.LoadXml(@"<bob UserType=""1"" />");
+
+            var configMapper = new ConfigMapper(xml.DocumentElement);
+            var result = (User)configMapper.GetObjectFromXml(typeof(User));
+            result.UserType.Should().Be(UserType.Enhanced);
+        }
+
+        [Test]
+        public void AttributeBindingShouldBindEnumsByMatchingStrings()
+        {
+            var xml = new XmlDocument();
+            xml.LoadXml(@"<bob UserType=""Enhanced"" />");
+
+            var configMapper = new ConfigMapper(xml.DocumentElement);
+            var result = (User)configMapper.GetObjectFromXml(typeof(User));
+            result.UserType.Should().Be(UserType.Enhanced);
+        }
+
+        [Test]
         public void AttributeBindingShouldBeCaseInsensitive()
         {
             var xml = new XmlDocument();
-            xml.LoadXml(@"<bob><favouriteNUMBER>1234567890123.45</favouriteNUMBER></bob>");
+            xml.LoadXml(@"<bob favouriteNUMBER=""1234567890123.45"" />");
 
             var configMapper = new ConfigMapper(xml.DocumentElement);
             var result = (User)configMapper.GetObjectFromXml(typeof(User));
             result.FavouriteNumber.Should().Be(1234567890123.45f);
         }
-
+        
         public class User
         {
             public string Username { get; set; }
             public int Age { get; set; }
             public decimal Height { get; set; }
             public float FavouriteNumber { get; set; }
+            public UserType UserType { get; set; }
+        }
+
+        public enum UserType
+        {
+            Standard=0,
+            Enhanced=1,
+            Admin=2
+
         }
     }
 }

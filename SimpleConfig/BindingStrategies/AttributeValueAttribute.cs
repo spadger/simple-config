@@ -44,16 +44,16 @@ namespace SimpleConfig.BindingStrategies
 
             var destinationPropertyType = destinationProperty.PropertyType;
 
-            if (typeof(IConvertible).IsAssignableFrom(destinationPropertyType))
+            if (destinationPropertyType.IsEnum)
             {
-                var value = Convert.ChangeType(attributeValue, destinationPropertyType);
+                var value = Enum.Parse(destinationPropertyType, attributeValue);
                 destinationProperty.SetValue(destinationObject, value);
                 return true;
             }
 
-            if (destinationPropertyType.IsEnum)
+            if (typeof(IConvertible).IsAssignableFrom(destinationPropertyType))
             {
-                var value = Enum.Parse(destinationPropertyType, attributeValue);
+                var value = Convert.ChangeType(attributeValue, destinationPropertyType);
                 destinationProperty.SetValue(destinationObject, value);
                 return true;
             }
