@@ -2,24 +2,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace SimpleConfig.Helpers
 {
     public static class TypeHelper
     {
-        public static bool HasDefaultConstructor(this Type @this)
+        public static bool HasANoArgsConstructor(this Type @this)
         {
-            return @this.GetConstructors().Any(x => x.GetParameters().Any() == false && x.IsPublic);
+            return @this.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
+                                .Any(x => x.GetParameters().Any() == false);
         }
 
         public static bool CanBeInstantiated(this Type @this)
         {
-            return @this.IsInterface == false && @this.IsAbstract == false && @this.HasDefaultConstructor();
+            return @this.IsInterface == false && @this.IsAbstract == false && @this.HasANoArgsConstructor();
         }
 
-        public static object Create(this Type type)
+        public static object Create(this Type @this)
         {
-            return Activator.CreateInstance(type);
+            var constructor = @this.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
+                                .FirstOrDefault(x => x.GetParameters().Any() == false);
+
+            if (constructor == null)
+            {
+                throw new InvalidOperationException("Cannot instantiate the type " + @this.AssemblyQualifiedName + "because  no no-arg constructor could be found");
+            }
+
+            return constructor.Invoke(null);
         }
 
         public static bool IsComplex(this Type @this)
@@ -33,7 +43,7 @@ namespace SimpleConfig.Helpers
                 {
                     typeof (IEnumerable),
                     typeof (IEnumerable<>)
-                }.Any(x => x.IsAssignableFrom(@this));
+                }.Any(x => x.IsAssignableFrom(@this)) && @this != typeof(string);
         }
     }
 }
