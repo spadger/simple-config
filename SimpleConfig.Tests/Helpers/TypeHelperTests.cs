@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -97,6 +98,30 @@ namespace SimpleConfig.Tests.Helpers
         public void IsComplex_ShouldDetermineWhetherGivenTypesIsComplex(Type type, bool isComplex)
         {
             type.IsComplex().Should().Be(isComplex);
+        }
+
+        [TestCase(typeof(List<string>), typeof(IEnumerable), true)]
+        [TestCase(typeof(List<string>), typeof(List<string>), true)]
+        [TestCase(typeof(IEnumerable), typeof(List<string>), false)]
+        [TestCase(typeof(IEnumerable), typeof(IEnumerable), true)]
+        [TestCase(typeof(List<string>), typeof(ArrayList), false)]
+        public void IsA_ShouldDetermineWhetherGivenTypesIsAssignableFromAKnownType(Type typeA, Type typeB, bool isAssignable)
+        {
+            typeA.IsA(typeB).Should().Be(isAssignable);
+        }
+
+        [TestCase(typeof(List<string>), typeof(IEnumerable), true)]
+        [TestCase(typeof(List<string>), typeof(List<string>), true)]
+        [TestCase(typeof(IEnumerable), typeof(List<string>), false)]
+        [TestCase(typeof(IEnumerable), typeof(IEnumerable), true)]
+        [TestCase(typeof(List<string>), typeof(ArrayList), false)]
+        public void IsA_Generic_ShouldDetermineWhetherGivenTypesIsAssignableFromAKnownType(Type typeA, Type typeB, bool isAssignable)
+        {
+            var method = typeof(TypeHelper).GetMethods().Where(x=>x.Name=="IsA").First(x=>x.IsGenericMethod);
+            var openMethod = method.MakeGenericMethod(typeB);
+            var result = (bool)openMethod.Invoke(null, new[] { typeA });
+
+            result.Should().Be(isAssignable);
         }
     }
 

@@ -37,6 +37,16 @@ namespace SimpleConfig.Helpers
             return @this.IsInterface || (@this.IsClass && @this != typeof(string));
         }
 
+        public static bool IsA<T>(this Type @this)
+        {
+            return @this.IsA(typeof (T));
+        }
+
+        public static bool IsA(this Type @this, Type t)
+        {
+            return t.IsAssignableFrom(@this);
+        }
+
         public static bool IsEnumerable(this Type @this)
         {
             return new[]
