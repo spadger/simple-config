@@ -54,7 +54,7 @@ namespace SimpleConfig.BindingStrategies
                 return true;
             }
 
-            if (typeof(IConvertible).IsAssignableFrom(destinationPropertyType))
+            if(destinationPropertyType.IsA<IConvertible>())
             {
                 var value = Convert.ChangeType(elementValue, destinationPropertyType);
                 destinationProperty.SetValue(destinationObject, value);

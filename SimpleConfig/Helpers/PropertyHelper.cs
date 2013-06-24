@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using SimpleConfig.BindingStrategies;
@@ -12,39 +14,45 @@ namespace SimpleConfig.Helpers
             return @this.PropertyType.IsComplex();
         }
 
-        public static bool IsDirectlyPopulatable(this PropertyInfo @this)
+        public static bool IsPlainEnumerableButNotGenericEnumerable(this PropertyInfo @this)
+        {
+            return @this.PropertyType.IsPlainEnumerableButNotGenericEnumerable();
+        }
+
+        public static bool IsForADirectlyPopulatableType(this PropertyInfo @this)
         {
             return !@this.PropertyType.IsComplex();
         }
 
         public static IEnumerable<IBindingStrategy> GetMappingStrategies(this PropertyInfo @this)
         {
-            var mappingStrategies = @this.GetCustomAttributes<BaseBindingAttribute>()
+            var customMappingStrategies = @this.GetCustomAttributes<BaseBindingAttribute>()
                                                 .Select(x => x.MappingStrategy)
                                                 .Where(x => x != null)
                                                 .ToArray();
 
-            if (mappingStrategies.Any())
+            if (customMappingStrategies.Any())
             {
-                return mappingStrategies;
+                return customMappingStrategies;
             }
 
-            if (@this.IsDirectlyPopulatable())
+            if (@this.IsPlainEnumerableButNotGenericEnumerable())
+            {
+                throw new ConfigMappingException("{0} is a non-generic enumerable which is not supported because it is impossible to know what type to fill it with.", @this.PropertyType.AssemblyQualifiedName);
+            }
+
+            if (@this.IsForADirectlyPopulatableType())
             {
                 return new IBindingStrategy[] { new AttributeValueMappingStrategy(), new ElementValueMappingStrategy() };
             }
 
-            if (@this.PropertyType.IsEnumerable())
+            if (@this.PropertyType.IsGenericEnumerable())
             {
                 return new[] { new EnumerableBindingStrategy() };
             }
-
-            if (@this.IsComplexType())
-            {
-                return new[] { new ComplexTypeBindingStrategy(),  };
-            }
-
-            return null;
+            
+            //This is our last chance, but also guaranteed to be complex due to the nature of IsDirectlyPopulatable
+            return new[] { new ComplexTypeBindingStrategy() };
         }
     }
 }

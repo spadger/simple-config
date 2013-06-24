@@ -76,21 +76,35 @@ namespace SimpleConfig.Tests.Helpers
             type.CanBeInstantiated().Should().Be(canBeInstantiated);
         }
 
-        [TestCase(typeof(IEnumerable), true)]
+        [TestCase(typeof(IEnumerable), false)]
         [TestCase(typeof(IEnumerable<string>), true)]
         [TestCase(typeof(ICollection<string>), true)]
         [TestCase(typeof(List<string>), true)]
-        [TestCase(typeof(ArrayList), true)]
-        [TestCase(typeof(string[]), true)]
-        [TestCase(typeof(string[]), true)]
+        [TestCase(typeof(ArrayList), false)]
+        [TestCase(typeof(string[]), false)]
         [TestCase(typeof(string), false)]
         [TestCase(typeof(TypeHelperTests), false)]
         [TestCase(typeof(SomeEnum), false)]
-        public void IsEnumerable_ShouldDetermineWhetherGivenTypesIsEnumerable(Type type, bool isEnumerable)
+        public void IsEnumerable_ShouldDetermineWhetherGivenTypesIsEnumerable(Type type, bool isGenericEnumerable)
         {
-            type.IsEnumerable().Should().Be(isEnumerable);
+            type.IsGenericEnumerable().Should().Be(isGenericEnumerable);
         }
 
+        [TestCase(typeof(IEnumerable), false)]
+        [TestCase(typeof(IEnumerable<string>), false)]
+        [TestCase(typeof(ICollection<string>), true)]
+        [TestCase(typeof(List<string>), true)]
+        [TestCase(typeof(ArrayList), false)]
+        [TestCase(typeof(string[]), false)]
+        [TestCase(typeof(string), false)]
+        [TestCase(typeof(TypeHelperTests), false)]
+        [TestCase(typeof(SomeEnum), false)]
+        public void IsAnInsertableCollection_ShouldDetermineWhetherGivenTypesIsAnInsertableCollection(Type type, bool isInsertable)
+        {
+            type.IsAnInsertableSequence().Should().Be(isInsertable);
+        }
+
+        
         [TestCase(typeof(string), false)]
         [TestCase(typeof(int), false)]
         [TestCase(typeof(SomeEnum), false)]

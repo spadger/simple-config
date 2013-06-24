@@ -19,7 +19,7 @@ namespace SimpleConfig.BindingStrategies
                 var result = Activator.CreateInstance(MappingStrategyType) as IBindingStrategy;
                 if (result == null)
                 {
-                    throw new ConfigMappingException("Custom mapping strategy is not a mpaping strategy: {0}", MappingStrategyType.AssemblyQualifiedName);
+                    throw new ConfigMappingException("Custom mapping strategy is not a mapping strategy: {0}", MappingStrategyType.AssemblyQualifiedName);
                 }
                 return result;
             }

@@ -37,9 +37,9 @@ namespace SimpleConfig.Tests.Helpers
         [TestCase("Interface", false)]
         [TestCase("Enumerable", false)]
         [TestCase("GenericEnumerable", false)]
-        public void IsDirectlyPopulatable_ShouldDetermineWhetherAGivenPropertyIsDirectlyPopulatable(string propertyName, bool isComplex)
+        public void IsForADirectlyPopulatableType_ShouldDetermineWhetherAGivenPropertyIsDirectlyPopulatable(string propertyName, bool isComplex)
         {
-            PropertyNamed(propertyName).IsDirectlyPopulatable().Should().Be(isComplex);
+            PropertyNamed(propertyName).IsForADirectlyPopulatableType().Should().Be(isComplex);
         }
 
         [Test]
@@ -64,16 +64,22 @@ namespace SimpleConfig.Tests.Helpers
             strategies.Should().Contain(x => x is ComplexTypeBindingStrategy);
         }
 
-        [TestCase("Enumerable")]
         [TestCase("GenericEnumerable")]
-        [TestCase("IntArray")]
-        [TestCase("IntList")]
-        [TestCase("ArrayList")]
-        public void GetMappingStrategies_ShouldChooseEnumerableBindingStrategyForEnumerableTypeProperties(string propertyName)
+        public void GetMappingStrategies_ShouldChooseEnumerableBindingStrategyForGenericEnumerableTypeProperties(string propertyName)
         {
             var strategies = PropertyNamed(propertyName).GetMappingStrategies();
             strategies.Should().HaveCount(1);
             strategies.Should().Contain(x => x is EnumerableBindingStrategy);
+        }
+
+        [TestCase("Enumerable")]
+        [TestCase("IntArray")]
+        [TestCase("IntArray")]
+        [TestCase("ArrayList")]
+        public void GetMappingStrategies_ShouldThrowAnExceptionForNonGenericEnumerableTypeProperties(string propertyName)
+        {
+            Action x = ()=>PropertyNamed(propertyName).GetMappingStrategies();
+            x.ShouldThrow<ConfigMappingException>();
         }
 
         [Test]

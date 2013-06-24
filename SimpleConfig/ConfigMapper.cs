@@ -17,16 +17,21 @@ namespace SimpleConfig
 
         public object GetObjectFromXml(Type type)
         {
+            return GetObjectFromXml(type, _configDocument);
+        }
+
+        public object GetObjectFromXml(Type type, XmlElement element)
+        {
             var result = type.Create();
-            PopulateObject(result, _configDocument);
+            PopulateObject(result, element);
             return result;
         }
 
-        private void PopulateObject(object destination, XmlElement element)
+        public void PopulateObject(object destination, XmlElement element)
         {
             var type = destination.GetType();
             
-            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(x=>x.CanWrite))
+            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(x=>x.CanWrite || x.GetType().IsGenericEnumerable()))
             {
                 PopulateProperty(destination, property, element);
             }

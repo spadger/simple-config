@@ -34,7 +34,12 @@ namespace SimpleConfig.Helpers
 
         public static bool IsComplex(this Type @this)
         {
-            return @this.IsInterface || (@this.IsClass && @this != typeof(string));
+            return( @this.IsInterface || (@this.IsClass && @this != typeof(string)));
+        }
+
+        public static bool IsPlainEnumerableButNotGenericEnumerable(this Type @this)
+        {
+            return @this != typeof(string) && @this.IsA<IEnumerable>() && !@this.IsGenericEnumerable();
         }
 
         public static bool IsA<T>(this Type @this)
@@ -47,13 +52,88 @@ namespace SimpleConfig.Helpers
             return t.IsAssignableFrom(@this);
         }
 
-        public static bool IsEnumerable(this Type @this)
+        public static bool IsGenericEnumerable(this Type @this)
         {
-            return new[]
-                {
-                    typeof (IEnumerable),
-                    typeof (IEnumerable<>)
-                }.Any(x => x.IsAssignableFrom(@this)) && @this != typeof(string);
+            if (@this == typeof (string) || @this.IsA<Array>())
+            {
+                return false;
+            }
+
+            if (@this.IsGenericEnumerableInterface())
+            {
+                return true;
+            }
+
+            return @this.GetInterfaces().Any(iface => iface.IsGenericEnumerableInterface());
+        }
+
+        private static bool IsGenericEnumerableInterface(this Type @this)
+        {
+            return @this.IsInterface
+                   && @this.IsGenericType
+                   && @this.GetGenericTypeDefinition() == typeof (IEnumerable<>);
+        }
+
+        public static bool IsAnInsertableSequence(this Type @this)
+        {
+            if (@this.IsA<Array>())
+            {
+                return false;
+            }
+            if (@this.InterfaceIsAnInsertableSequence())
+            {
+                return true;
+            }
+
+            return @this.GetInterfaces().Any(iface => iface.InterfaceIsAnInsertableSequence());
+        }
+
+        public static bool InterfaceIsAnInsertableSequence(this Type @this)
+        {
+            var result = @this.IsInterface
+                         && @this.IsGenericType
+                         && @this.GetGenericTypeDefinition() == typeof (ICollection<>);
+
+            return result;
+        }
+
+        public static Type FindFirstImplementationOfGenericInterface(this Type @this, Type requiredInterface)
+        {
+            AssertTypeIsAnOpenGenericInterface(requiredInterface);
+            if (@this.ImplementsOpenGenericInterface(requiredInterface))
+            {
+                return @this;
+            }
+
+            return @this.GetInterfaces().FirstOrDefault(x=>x.ImplementsOpenGenericInterface(requiredInterface));
+        }
+
+        private static bool ImplementsOpenGenericInterface(this Type @this, Type requiredInterface)
+        {
+            //We know that T is an open generic
+
+            if (!@this.IsGenericType)
+            {
+                return false;
+            }
+
+            //we passed in an open generic
+            if (@this == requiredInterface)
+            {
+                return true;
+            }
+
+            return @this.GetGenericTypeDefinition() == requiredInterface;
+        }
+
+        private static void AssertTypeIsAnOpenGenericInterface(Type type)
+        {
+            if (type.IsInterface && type.IsGenericTypeDefinition)
+            {
+                return;
+            }
+
+            throw new ConfigMappingException("{0} is not an open generic interface", type.FullName);
         }
     }
 }
