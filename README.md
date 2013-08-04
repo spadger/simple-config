@@ -32,6 +32,10 @@ We could now write a disproportionately large ConfigurationSection, or a some bo
 ```C#
 var settings = (ServiceSettings)(dynamic)ConfigurationManager.GetSection("serviceSettings");
 ```
+or even
+```C#
+ServiceSettings settings = (dynamic)ConfigurationManager.GetSection("serviceSettings");
+```
 
 ##Overriding the default conventions
 If you don't mind using attributes, Simple-config does come with some a small selection of binding hints to guide the binding process.  For example, using the same xml as above, the following settings DTO could still be bound:
