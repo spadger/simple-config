@@ -36,7 +36,7 @@ namespace SimpleConfig
         {
             var type = destination.GetType();
             
-            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(x=>x.CanWrite || x.PropertyType.IsGenericEnumerable()))
+            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(x=>x.CanWrite || x.PropertyType.IsGenericEnumerable() || x.IsComplexType()))
             {
                 PopulateProperty(destination, property, element);
             }
