@@ -15,6 +15,11 @@ namespace SimpleConfig
             _configDocument = configDocument;
         }
 
+        public T GetObjectFromXml<T>()
+        {
+            return (T)GetObjectFromXml(typeof(T), _configDocument);
+        }
+
         public object GetObjectFromXml(Type type)
         {
             return GetObjectFromXml(type, _configDocument);
@@ -31,7 +36,7 @@ namespace SimpleConfig
         {
             var type = destination.GetType();
             
-            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(x=>x.CanWrite || x.GetType().IsGenericEnumerable()))
+            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(x=>x.CanWrite || x.PropertyType.IsGenericEnumerable()))
             {
                 PopulateProperty(destination, property, element);
             }

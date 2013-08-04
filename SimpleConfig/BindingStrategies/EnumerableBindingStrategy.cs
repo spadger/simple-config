@@ -50,13 +50,44 @@ namespace SimpleConfig.BindingStrategies
             Action<object> adder = GetCollectionAdder(destinationCollection);
             var payloadType = destinationProperty.PropertyType.GetGenericArguments()[0];
 
+            if (payloadType.IsComplex())
+            {
+                PopulateComplexValues(collectionElement, payloadType, mapper, adder);
+            }
+            else
+            {
+                PopulateSimpleValues(collectionElement, payloadType, mapper, adder);
+            }
+
+            return true;
+        }
+
+        private void PopulateComplexValues(XmlElement collectionElement, Type payloadType, ConfigMapper mapper, Action<object> adder)
+        {
             foreach (var childElement in collectionElement.ChildNodes.OfType<XmlElement>())
             {
                 var mappedObject = mapper.GetObjectFromXml(payloadType, childElement);
                 adder(mappedObject);
             }
+        }
 
-            return true;
+        private void PopulateSimpleValues(XmlElement collectionElement, Type payloadType, ConfigMapper mapper, Action<object> adder)
+        {
+            foreach (var childElement in collectionElement.ChildNodes.OfType<XmlElement>())
+            {
+                var elementValue = childElement.InnerText;
+
+                if (payloadType.IsEnum)
+                {
+                    var value = Enum.Parse(payloadType, elementValue);
+                    adder(value);
+                }
+                else if (payloadType.IsA<IConvertible>())
+                {
+                    var value = Convert.ChangeType(elementValue, payloadType);
+                    adder(value);
+                }
+            }
         }
 
         private object GetDestinationCollection(object destinationObject, PropertyInfo destinationProperty)
