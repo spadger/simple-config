@@ -110,7 +110,7 @@ namespace SimpleConfig.BindingStrategies
 
         private object GetCollectionFromReadOnlyProperty(object parentObject, PropertyInfo destinationProperty)
         {
-            var destinationCollection = destinationProperty.GetValue(parentObject);
+            var destinationCollection = destinationProperty.GetValue(parentObject, null);
             if (destinationCollection == null)
             {
                 throw new ConfigMappingException("Cannot populate property {0} of {1} because it is read-only and also null", destinationProperty.Name, parentObject.GetType().AssemblyQualifiedName);
@@ -127,7 +127,7 @@ namespace SimpleConfig.BindingStrategies
         private object GetCollectionFromWriteOnlyProperty(object parentObject, PropertyInfo destinationProperty)
         {
             var collection = CollectionFor(destinationProperty.PropertyType);
-            destinationProperty.SetValue(parentObject, collection);
+            destinationProperty.SetValue(parentObject, collection, null);
 
             return collection;
         }
@@ -135,7 +135,7 @@ namespace SimpleConfig.BindingStrategies
         private object GetCollectionFromReadWriteProperty(object parentObject, PropertyInfo destinationProperty)
         {
             //if it's null, we will add one
-            var destinationCollection = destinationProperty.GetValue(parentObject);
+            var destinationCollection = destinationProperty.GetValue(parentObject, null);
             if (destinationCollection == null)
             {
                 return GetCollectionFromWriteOnlyProperty(parentObject, destinationProperty);

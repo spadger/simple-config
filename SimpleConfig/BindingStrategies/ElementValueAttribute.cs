@@ -50,14 +50,14 @@ namespace SimpleConfig.BindingStrategies
             if (destinationPropertyType.IsEnum)
             {
                 var value = Enum.Parse(destinationPropertyType, elementValue);
-                destinationProperty.SetValue(destinationObject, value);
+                destinationProperty.SetValue(destinationObject, value, null);
                 return true;
             }
 
             if(destinationPropertyType.IsA<IConvertible>())
             {
                 var value = Convert.ChangeType(elementValue, destinationPropertyType);
-                destinationProperty.SetValue(destinationObject, value);
+                destinationProperty.SetValue(destinationObject, value, null);
                 return true;
             }
 

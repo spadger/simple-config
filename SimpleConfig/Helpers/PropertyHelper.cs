@@ -26,7 +26,8 @@ namespace SimpleConfig.Helpers
 
         public static IEnumerable<IBindingStrategy> GetMappingStrategies(this PropertyInfo @this)
         {
-            var customMappingStrategies = @this.GetCustomAttributes<BaseBindingAttribute>()
+            var customMappingStrategies = @this.GetCustomAttributes(true)
+                                                .OfType<BaseBindingAttribute>()
                                                 .Select(x => x.MappingStrategy)
                                                 .Where(x => x != null)
                                                 .ToArray();
