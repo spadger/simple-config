@@ -50,6 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\TypeHelper.cs" />
     <Compile Include="Helpers\PropertyHelper.cs" />
+    <Compile Include="SimpleConfigHandler.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

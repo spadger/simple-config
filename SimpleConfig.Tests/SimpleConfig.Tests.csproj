@@ -53,6 +53,7 @@
     <Compile Include="Helpers\TypeHelperTests.cs" />
     <Compile Include="Helpers\XmlElementHelperTests.cs" />
     <Compile Include="Integration\Complex.cs" />
+    <Compile Include="Integration\Casting.cs" />
     <Compile Include="Integration\Enumerable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

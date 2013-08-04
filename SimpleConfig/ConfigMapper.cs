@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
@@ -6,7 +7,7 @@ using SimpleConfig.Helpers;
 
 namespace SimpleConfig
 {
-    public class ConfigMapper
+    public class ConfigMapper : DynamicObject
     {
         private readonly XmlElement _configDocument;
 
@@ -30,6 +31,12 @@ namespace SimpleConfig
             var result = type.Create();
             PopulateObject(result, element);
             return result;
+        }
+
+        public override bool TryConvert(ConvertBinder binder, out object result)
+        {
+            result = GetObjectFromXml(binder.ReturnType);
+            return true;
         }
 
         public void PopulateObject(object destination, XmlElement element)
