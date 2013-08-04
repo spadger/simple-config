@@ -18,13 +18,13 @@ public class ServiceSettings
 ```
 we could write the xml for it in our app.config or web.config
 ```xml
-<Service maxThreads="4">
+<serviceSettings maxThreads="4">
   <endpoint>http://localhost:9090</endpoint>
   <bannedPhrases>
     <phrase>something</phrase>
     <phrase>else</phrase>
   </bannedPhrases>
-</Service>
+</serviceSettings>
 ```
 
 We could now write a disproportionately large ConfigurationSection, or a some boilerplat code, or we could just call this:
