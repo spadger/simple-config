@@ -118,72 +118,70 @@ namespace SimpleConfig.Tests.Integration
             pets[1].Paws.Should().Be(3);
             pets[1].Name.Should().Be("Tiddles");
         }
-    }
 
-    public class SimplePersonRW
-    {
-        public List<string> Pets { get; set; }
-    }
-
-    public class ComplexPersonRW
-    {
-        public List<Pet> Pets { get; set; }
-    }
-
-    public class SimplePersonRO
-    {
-        private List<string> pets = new List<string>();
-        public List<string> Pets
+        public class SimplePersonRW
         {
-            get { return pets; }
+            public List<string> Pets { get; set; }
+        }
+
+        public class ComplexPersonRW
+        {
+            public List<Pet> Pets { get; set; }
+        }
+
+        public class SimplePersonRO
+        {
+            private List<string> pets = new List<string>();
+            public List<string> Pets
+            {
+                get { return pets; }
+            }
+        }
+
+        public class ComplexPersonRO
+        {
+            private List<Pet> pets = new List<Pet>();
+            public List<Pet> Pets
+            {
+                get { return pets; }
+            }
+        }
+
+        public class SimplePersonWO
+        {
+            private List<string> pets;
+            public List<string> Pets
+            {
+                set { pets = value; }
+            }
+
+            public List<string> GetPets()
+            {
+                return pets;
+            }
+        }
+
+        public class ComplexPersonWO
+        {
+            private List<Pet> pets;
+            public List<Pet> Pets
+            {
+                set { pets = value; }
+            }
+
+            public List<Pet> GetPets()
+            {
+                return pets;
+            }
+        }
+
+
+        public class Pet
+        {
+            public string Name { get; set; }
+            public int Paws { get; set; }
         }
     }
 
-    public class ComplexPersonRO
-    {
-        private List<Pet> pets = new List<Pet>();
-        public List<Pet> Pets
-        {
-            get { return pets; }
-        }
-    }
-
-    /// <summary>
-    /// //////
-    /// 
-    /// </summary>
-    public class SimplePersonWO
-    {
-        private List<string> pets;
-        public List<string> Pets
-        {
-            set { pets = value; }
-        }
-
-        public List<string> GetPets()
-        {
-            return pets;
-        }
-    }
-
-    public class ComplexPersonWO
-    {
-        private List<Pet> pets;
-        public List<Pet> Pets
-        {
-            set { pets = value; }
-        }
-
-        public List<Pet> GetPets()
-        {
-            return pets;
-        }
-    }
-
-
-    public class Pet
-    {
-        public string Name { get; set; }
-        public int Paws { get; set; }
-    }
+    
 }

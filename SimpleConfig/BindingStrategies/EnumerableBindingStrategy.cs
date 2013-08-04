@@ -27,7 +27,6 @@ namespace SimpleConfig.BindingStrategies
 
     public class EnumerableBindingStrategy : IBindingStrategy
     {
-
         public EnumerableBindingStrategy(){}
         public EnumerableBindingStrategy(string elementName)
         {
@@ -36,7 +35,7 @@ namespace SimpleConfig.BindingStrategies
 
         public string ElementName { get; private set; }
 
-        public bool Map(object destinationObject, PropertyInfo destinationProperty, XmlElement element, XmlElement allConfig, ConfigMapper mapper)
+        public bool Map(object parentObject, PropertyInfo destinationProperty, XmlElement element, XmlElement allConfig, ConfigMapper mapper)
         {
             var collectionElement = element.GetElementNamed(ElementName ?? destinationProperty.Name);
 
@@ -45,7 +44,7 @@ namespace SimpleConfig.BindingStrategies
                 return false;
             }
 
-            object destinationCollection = GetDestinationCollection(destinationObject, destinationProperty);
+            object destinationCollection = GetDestinationCollection(parentObject, destinationProperty);
 
             Action<object> adder = GetCollectionAdder(destinationCollection);
             var payloadType = destinationProperty.PropertyType.GetGenericArguments()[0];
@@ -90,63 +89,63 @@ namespace SimpleConfig.BindingStrategies
             }
         }
 
-        private object GetDestinationCollection(object destinationObject, PropertyInfo destinationProperty)
+        private object GetDestinationCollection(object parentObject, PropertyInfo destinationProperty)
         {
             if (destinationProperty.CanRead && !destinationProperty.CanWrite)
             {
-                return GetCollectionFromReadOnlyProperty(destinationObject, destinationProperty);
+                return GetCollectionFromReadOnlyProperty(parentObject, destinationProperty);
             }
             if (destinationProperty.CanWrite && !destinationProperty.CanRead)
             {
-                return GetCollectionFromWriteOnlyProperty(destinationObject, destinationProperty);
+                return GetCollectionFromWriteOnlyProperty(parentObject, destinationProperty);
             }
 
             if (destinationProperty.CanRead && destinationProperty.CanWrite)
             {
-                return GetCollectionFromReadWriteProperty(destinationObject, destinationProperty);
+                return GetCollectionFromReadWriteProperty(parentObject, destinationProperty);
             }
             
             throw new ConfigMappingException("Um, I found a property with no getter and no setter...");
         }
 
-        private object GetCollectionFromReadOnlyProperty(object destinationObject, PropertyInfo destinationProperty)
+        private object GetCollectionFromReadOnlyProperty(object parentObject, PropertyInfo destinationProperty)
         {
-            var destinationCollection = destinationProperty.GetValue(destinationObject);
+            var destinationCollection = destinationProperty.GetValue(parentObject);
             if (destinationCollection == null)
             {
-                throw new ConfigMappingException("Cannot populate property {0} of {1} because it is read-only and also null", destinationProperty.Name, destinationObject.GetType().AssemblyQualifiedName);
+                throw new ConfigMappingException("Cannot populate property {0} of {1} because it is read-only and also null", destinationProperty.Name, parentObject.GetType().AssemblyQualifiedName);
             }
 
             var destinationCollectionType = destinationCollection.GetType();
             if (!destinationCollectionType.IsAnInsertableSequence())
             {
-                throw new ConfigMappingException("Cannot populate property {0} of {1} because it is read-only and its value is immutable (it is a {2})", destinationProperty.Name, destinationObject.GetType().AssemblyQualifiedName, destinationCollectionType.FullName);
+                throw new ConfigMappingException("Cannot populate property {0} of {1} because it is read-only and its value is immutable (it is a {2})", destinationProperty.Name, parentObject.GetType().AssemblyQualifiedName, destinationCollectionType.FullName);
             }
             return destinationCollection;
         }
 
-        private object GetCollectionFromWriteOnlyProperty(object destinationObject, PropertyInfo destinationProperty)
+        private object GetCollectionFromWriteOnlyProperty(object parentObject, PropertyInfo destinationProperty)
         {
             var collection = CollectionFor(destinationProperty.PropertyType);
-            destinationProperty.SetValue(destinationObject, collection);
+            destinationProperty.SetValue(parentObject, collection);
 
             return collection;
         }
 
-        private object GetCollectionFromReadWriteProperty(object destinationObject, PropertyInfo destinationProperty)
+        private object GetCollectionFromReadWriteProperty(object parentObject, PropertyInfo destinationProperty)
         {
             //if it's null, we will add one
-            var destinationCollection = destinationProperty.GetValue(destinationObject);
+            var destinationCollection = destinationProperty.GetValue(parentObject);
             if (destinationCollection == null)
             {
-                return GetCollectionFromWriteOnlyProperty(destinationObject, destinationProperty);
+                return GetCollectionFromWriteOnlyProperty(parentObject, destinationProperty);
             }
 
             var destinationCollectionType = destinationCollection.GetType();
             //one exists, first, lets see if we can use the existing object
             if (!destinationCollectionType.IsAnInsertableSequence())
             {
-                return GetCollectionFromWriteOnlyProperty(destinationObject, destinationProperty);
+                return GetCollectionFromWriteOnlyProperty(parentObject, destinationProperty);
             }
 
             return destinationCollection;

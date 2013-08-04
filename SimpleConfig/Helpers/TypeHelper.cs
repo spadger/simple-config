@@ -26,7 +26,7 @@ namespace SimpleConfig.Helpers
 
             if (constructor == null)
             {
-                throw new InvalidOperationException("Cannot instantiate the type " + @this.AssemblyQualifiedName + "because  no no-arg constructor could be found");
+                throw new InvalidOperationException("Cannot instantiate the type " + @this.AssemblyQualifiedName + "because no no-arg constructor could be found");
             }
 
             return constructor.Invoke(null);
