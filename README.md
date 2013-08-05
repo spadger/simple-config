@@ -5,6 +5,8 @@ Simple-config is an extensible, convention-based XML to C# binder, specifically 
 
 Simply by performing a cast to the required type, SimpleConfig will perform all required mapping, without the use for any magical markup
 
+#####** simple-config is available on nuget - search for 'simple-config' **
+
 ##Simple use case
 
 If we have some configurable settings
@@ -18,6 +20,10 @@ public class ServiceSettings
 ```
 we could write the xml for it in our app.config or web.config
 ```xml
+<!-- Wire up the handler inside the <configSections /> element; once per custom section -->
+<section name="serviceSettings" type="SimpleConfig.SimpleConfigHandler, SimpleConfig" />
+
+<!-- And this goes in the main part of the config file -->
 <serviceSettings maxThreads="4">
   <endpoint>http://localhost:9090</endpoint>
   <bannedPhrases>
@@ -27,7 +33,7 @@ we could write the xml for it in our app.config or web.config
 </serviceSettings>
 ```
 
-We could now write a disproportionately large ConfigurationSection, or a some boilerplat code, or we could just call this:
+We could now write a disproportionately large ConfigurationSection, or a some boilerplate code, or we could just call this:
 
 ```C#
 var settings = (ServiceSettings)(dynamic)ConfigurationManager.GetSection("serviceSettings");
@@ -52,14 +58,14 @@ public class ServiceSettings
 ```
 
 ##Enumerables and lists
-Simple-config is designed to be helpful when binding enumerations; please consider the following when binding:
+Simple-config is designed to be helpful when binding IEnumerables; please consider the following when binding:
   * You destination needs to implement System.Collections.Generic.IEnumerable<> so that the payload type is known
   * You can only bind to IEnumerable<> if the destination property has a setter (so SimpleConfig can create a mutatable Type)
   * If your destination property has no setter, it needs to be pre-populated with something that implements ICollection<>
 
 ##Do anything
 
-The architecture of Simple-config allows you to create new binding strategies to perform whatever custom bindingyou need, for example, to decrypt sensiive config
+The architecture of Simple-config allows you to create new binding strategies to perform whatever custom binding you need, for example, to decrypt sensitive config
 
 Simply create a binding stratgy that implements IBindingStrategy
 
@@ -79,7 +85,7 @@ public interface IBindingStrategy
 }
 ```
 
-and hook it up bycreating a new binding attribte that inherits BaseBindingAttribute
+In order to hook up the binding strategy, creatw a new binding attribte that inherits BaseBindingAttribute
 
 ```C#
 [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
@@ -88,3 +94,5 @@ public abstract class BaseBindingAttribute : Attribute
     public abstract IBindingStrategy MappingStrategy { get; }
 }
 ```
+
+Then attach the binding attribute to the property that requires custom binding
