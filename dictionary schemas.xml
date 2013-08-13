@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- I see four shapes of dictionary: -->
+<people>
+  
+  <!-- 1: Element per KVP, K & V in side-by-sode attributes-->
+  <person>
+    <attrs>
+      <attr name="height" value="170" />
+      <attr name="weight" value="80" />
+    </attrs>
+  </person>
+
+  <!-- 2: Element per KVP, K in attribute, V is the element's iner value-->
+  <person>
+    <attrs>
+      <attr name="height">170</attr>
+      <attr name="weight">80</attr>
+    </attrs>
+  </person>
+
+  <!-- 3: Element per KVP, K is element name, V is element's inner value -->
+  <person>
+    <attrs>
+      <height>170</height>
+      <weight>80</weight>
+    </attrs>
+  </person>
+
+  <!-- 4: Parent element per KVP, sub-element for K & V-->
+  <person>
+    <attrs>
+      <attr>
+        <key>height</key>
+        <value>170</value>
+      </attr>
+      <attr>
+        <key>weight</key>
+        <value>80</value>
+      </attr>
+    </attrs>
+  </person>
+
+  
+</people>
