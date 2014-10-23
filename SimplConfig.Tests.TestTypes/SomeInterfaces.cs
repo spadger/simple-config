@@ -2,8 +2,8 @@
 {
     public interface SomeInterfaces { }
 
-    public interface PropertyWithMethod { void X(); }
-    public interface NoPublicGetter { int X { set; } }
-    public interface NoPublicSetter { int X { get; } }
+    public interface WithMethod { void X(); }
+    public interface NoGetter { int X { set; } }
+    public interface NoSetter { int X { get; } }
     public interface NoProperties { }
 }

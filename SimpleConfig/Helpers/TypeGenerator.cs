@@ -3,16 +3,16 @@ using System.Linq;
 
 namespace SimpleConfig.Helpers
 {
-    public class TypeGenerator
+    public class ConcreteTypeGenerator
     {
-        public object Generate(Type t)
+        public static object GenerateFromInterface(Type t)
         {
             ValidateRequestedType(t);
 
             return null;
         }
 
-        public void ValidateRequestedType(Type t)
+        public static void ValidateRequestedType(Type t)
         {
             if (!t.IsInterface)
             {

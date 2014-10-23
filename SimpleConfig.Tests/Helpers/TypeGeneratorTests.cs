@@ -12,34 +12,34 @@ namespace SimpleConfig.Tests.Helpers
         [Test]
         public void ValidateRequestedType_WhenTargetIsNotAnInterface_ShouldThrow()
         {
-            Action x = () => new TypeGenerator().ValidateRequestedType(typeof(object));
+            Action x = () => ConcreteTypeGenerator.ValidateRequestedType(typeof(object));
             x.ShouldThrow<ConfigMappingException>().WithMessage("requested type is not an interface");
         }
 
         [Test]
         public void ValidateRequestedType_WhenTargetInterfaceContainsAMethod_ShouldThrow()
         {
-            Action x = () => new TypeGenerator().ValidateRequestedType(typeof(PropertyWithMethod));
+            Action x = () => ConcreteTypeGenerator.ValidateRequestedType(typeof(WithMethod));
             x.ShouldThrow<ConfigMappingException>().WithMessage("requested type may not have methods");
         }
 
         [Test]
         public void ValidateRequestedType_WhenTargetInterfaceContainsANonReadableProperty_ShouldThrow()
-        {          
-            Action x = () => new TypeGenerator().ValidateRequestedType(typeof(NoPublicGetter));
+        {
+            Action x = () => ConcreteTypeGenerator.ValidateRequestedType(typeof(NoGetter));
             x.ShouldThrow<ConfigMappingException>().WithMessage("write-only properties are not supported");
         }
 
         [Test]
         public void ValidateRequestedType_WhenTargetInterfaceContainsAWritableNoProperty_ShouldNotThrow()
         {
-            new TypeGenerator().ValidateRequestedType(typeof(NoPublicSetter));
+            ConcreteTypeGenerator.ValidateRequestedType(typeof(NoSetter));
         }
 
         [Test]
         public void ValidateRequestedType_WhenTargetInterfaceContainsNoProperties_ShouldThrow()
         {
-            Action x = () => new TypeGenerator().ValidateRequestedType(typeof(NoProperties));
+            Action x = () => ConcreteTypeGenerator.ValidateRequestedType(typeof(NoProperties));
             x.ShouldThrow<ConfigMappingException>().WithMessage("no properties were found");
         }
     }
