@@ -47,6 +47,7 @@
     <Compile Include="BindingStrategies\ElementValueAttribute.cs" />
     <Compile Include="BindingStrategies\AttributeValueAttribute.cs" />
     <Compile Include="BindingStrategies\IBindingStrategy.cs" />
+    <Compile Include="Helpers\TypeGenerator.cs" />
     <Compile Include="Helpers\XmlElementHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\TypeHelper.cs" />

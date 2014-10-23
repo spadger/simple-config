@@ -75,6 +75,7 @@
     <Compile Include="BindingStrategies\SimpleAttributeBindingTests.cs" />
     <Compile Include="BindingStrategies\SimpleElementBindingTests.cs" />
     <Compile Include="Helpers\PropertyHelperTests.cs" />
+    <Compile Include="Helpers\TypeGeneratorTests.cs" />
     <Compile Include="Helpers\TypeHelperTests.cs" />
     <Compile Include="Helpers\XmlElementHelperTests.cs" />
     <Compile Include="Integration\Complex.cs" />

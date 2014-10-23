@@ -69,7 +69,7 @@ namespace SimpleConfig.Tests.Helpers
 
         [TestCase(typeof(Public_NoObviousConstructor), true)]
         [TestCase(typeof(Public_PublicConstructorWithArgs), false)]
-        [TestCase(typeof(SomeInterface), false)]
+        [TestCase(typeof(SomeInterfaces), false)]
         [TestCase(typeof(SomeAbstractClass), false)]
         public void CanBeInstantiated_ShouldDetermineWhetherGivenTypesCanBeInstantiatedUsingTheActivator(Type type, bool canBeInstantiated)
         {

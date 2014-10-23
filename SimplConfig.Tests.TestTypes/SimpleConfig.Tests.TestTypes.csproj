@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SomeInterface.cs" />
+    <Compile Include="SomeInterfaces.cs" />
     <Compile Include="InternalTypes.cs" />
     <Compile Include="PublicTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
