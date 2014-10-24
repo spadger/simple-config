@@ -94,12 +94,6 @@ namespace SimpleConfig.Helpers
                 returnType: propertyType,
                 parameterTypes: Type.EmptyTypes);
 
-            typeBuilder.DefineMethodOverride(getAccessorMethodBuilder, interfaceType.GetMethod(getAccessorName));
-
-            var interfaceGetAccessor = interfaceType.GetMethod(getAccessorName);
-            if (interfaceGetAccessor != null)
-                typeBuilder.DefineMethodOverride(getAccessorMethodBuilder, interfaceGetAccessor);
-
             var getAccessorILGenerator = getAccessorMethodBuilder.GetILGenerator();
             getAccessorILGenerator.Emit(OpCodes.Ldarg_0);
             getAccessorILGenerator.Emit(OpCodes.Ldfld, fieldBuilder);
@@ -113,10 +107,6 @@ namespace SimpleConfig.Helpers
                 attributes: getSetVirtualAttributes,
                 returnType: null,
                 parameterTypes: new[] { propertyType });
-
-            var interfaceSetAccessor = interfaceType.GetMethod(setAccessorName);
-            if (interfaceSetAccessor != null)
-                typeBuilder.DefineMethodOverride(setAccessorMethodBuiler, interfaceSetAccessor);
 
             var setAccessorILGenerator = setAccessorMethodBuiler.GetILGenerator();
             setAccessorILGenerator.Emit(OpCodes.Ldarg_0);

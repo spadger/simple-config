@@ -58,15 +58,7 @@ namespace SimpleConfig.Tests.Helpers
         }
 
         [Test]
-        public void GenerateFromInterface_BaseInterfaceHasAGetter_ShouldYieldAnObject()
-        {
-            var concrete = ConcreteTypeGenerator.GetInstanceOf(typeof(SomeBindableInterface));
-            concrete.Should().NotBeNull();
-            concrete.Should().BeAssignableTo<SomeBindableInterface>();
-        }
-
-        [Test]
-        public void GenerateFromInterface_BaseInterfaceHasAGetter_ShouldYieldAWorkingType()
+        public void GenerateFromInterface_BaseInterfaceHasAGetterAndSetter_ShouldYieldAWorkingType()
         {
             var concrete = (GetterAndSetter)ConcreteTypeGenerator.GetInstanceOf(typeof(GetterAndSetter));
             concrete.X = 123;
@@ -74,6 +66,15 @@ namespace SimpleConfig.Tests.Helpers
 
             concrete.X = 456;
             concrete.X.Should().Be(456);
+        }
+
+        [Test]
+        public void GenerateFromInterface_BaseInterfaceOnlyHasAGetter_ShouldYieldAWorkingType()
+        {
+            var concrete = (NoSetter)ConcreteTypeGenerator.GetInstanceOf(typeof(NoSetter));
+            concrete.X.Should().Be(0);
+            concrete.GetType().GetProperties()[0].SetValue(concrete, 123, new object[0]);
+            concrete.X.Should().Be(123);
         }
     }
 }
