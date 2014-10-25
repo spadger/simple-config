@@ -82,6 +82,7 @@
     <Compile Include="Helpers\TypeGeneratorTests.cs" />
     <Compile Include="Helpers\TypeHelperTests.cs" />
     <Compile Include="Helpers\XmlElementHelperTests.cs" />
+    <Compile Include="Integration\Interfaces\Inheritence.cs" />
     <Compile Include="Integration\Interfaces\NestedInterfaces.cs" />
     <Compile Include="Integration\Interfaces\Interfaces.cs" />
     <Compile Include="Integration\Complex.cs" />

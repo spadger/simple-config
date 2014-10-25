@@ -28,11 +28,21 @@ namespace SimpleConfig.Helpers
 
             var typeBuilder = GetTypeBuilder(t);
 
-            CreateAutoProperties(t, typeBuilder);
+            Build(t, typeBuilder);
 
             var concreteType = typeBuilder.CreateType();
 
             return concreteType;
+        }
+
+        private static void Build(Type t, TypeBuilder typeBuilder)
+        {
+            CreateAutoPropertiesFor(t, typeBuilder);
+
+            foreach (var @interface in t.GetInterfaces())
+            {
+                Build(@interface, typeBuilder);
+            }
         }
 
         public static void ValidateRequestedType(Type t)
@@ -51,14 +61,9 @@ namespace SimpleConfig.Helpers
             {
                 throw new ConfigMappingException("write-only properties are not supported");
             }
-
-            if (!t.GetProperties().Any())
-            {
-                throw new ConfigMappingException("no properties were found");
-            }
         }
 
-        private static void CreateAutoProperties(Type interfaceType, TypeBuilder typeBuilder)
+        private static void CreateAutoPropertiesFor(Type interfaceType, TypeBuilder typeBuilder)
         {
             foreach (var property in interfaceType.GetProperties())
             {

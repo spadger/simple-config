@@ -37,13 +37,6 @@ namespace SimpleConfig.Tests.Helpers
         }
 
         [Test]
-        public void ValidateRequestedType_WhenTargetInterfaceContainsNoProperties_ShouldThrow()
-        {
-            Action x = () => ConcreteTypeGenerator.ValidateRequestedType(typeof(NoProperties));
-            x.ShouldThrow<ConfigMappingException>().WithMessage("no properties were found");
-        }
-
-        [Test]
         public void GetTypeBuilder_WhenConcreteTypeIsCreated_ShouldCreateReasonableClassName()
         {
             var builder = ConcreteTypeGenerator.GetTypeBuilder(typeof(SomeBindableInterface));
