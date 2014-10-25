@@ -67,6 +67,15 @@ namespace SimpleConfig.Tests.Helpers
             result.GetType().Should().Be(classType);
         }
 
+        [TestCase("Public_NoObviousConstructor")]
+        [TestCase("SomeInterface")]
+        public void CreateFromObjectOrInterface_ShouldCreateANewInstanceOfTheCorrectType(string classTypeName)
+        {
+            var classType = Type.GetType(string.Format(TYPE_FORMAT, classTypeName));
+            var result = classType.CreateFromObjectOrInterface();
+            classType.IsAssignableFrom(result.GetType()).Should().BeTrue();
+        }
+
         [TestCase(typeof(Public_NoObviousConstructor), true)]
         [TestCase(typeof(Public_PublicConstructorWithArgs), false)]
         [TestCase(typeof(SomeInterfaces), false)]

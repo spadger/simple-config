@@ -19,6 +19,16 @@ namespace SimpleConfig.Helpers
             return @this.IsInterface == false && @this.IsAbstract == false && @this.HasANoArgsConstructor();
         }
 
+        public static object CreateFromObjectOrInterface(this Type @this)
+        {
+            if (@this.IsInterface)
+            {
+                return ConcreteTypeGenerator.GetInstanceOf(@this);
+            }
+
+            return @this.Create();
+        }
+
         public static object Create(this Type @this)
         {
             var constructor = @this.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)

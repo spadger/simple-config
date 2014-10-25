@@ -28,7 +28,7 @@ namespace SimpleConfig
 
         public object GetObjectFromXml(Type type, XmlElement element)
         {
-            var result = type.Create();
+            var result = type.CreateFromObjectOrInterface();
             PopulateObject(result, element);
             return result;
         }
@@ -53,7 +53,6 @@ namespace SimpleConfig
         {
             var mappingStrategies = destinationProperty.GetMappingStrategies();
 
-            
             if (mappingStrategies==null)
             {
                 throw new ConfigMappingException("It is not possible to map property {0} (of type {1}) because no mapping strategy could be found", destinationProperty.Name, destinationProperty.PropertyType.FullName);

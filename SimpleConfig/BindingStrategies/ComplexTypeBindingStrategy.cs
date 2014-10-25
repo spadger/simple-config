@@ -57,7 +57,7 @@ namespace SimpleConfig.BindingStrategies
 
         private object GetObjectFromWriteOnlyProperty(object parentObject, PropertyInfo destinationProperty)
         {
-            var destinationObject = destinationProperty.PropertyType.Create();
+            var destinationObject = destinationProperty.PropertyType.CreateFromObjectOrInterface();
             destinationProperty.SetValue(parentObject, destinationObject, null);
 
             return destinationObject;

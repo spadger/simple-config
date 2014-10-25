@@ -37,4 +37,9 @@
     {
         internal Public_InternalConstructorWithArgs(int a) { }
     }
+
+    public interface SomeInterface
+    {
+        bool X { get; set; }
+    }
 }
