@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleConfig", "SimpleConfig\SimpleConfig.csproj", "{1C7AB00C-3E70-4196-A114-DFB1D309BBC4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleConfig.Tests", "SimpleConfig.Tests\SimpleConfig.Tests.csproj", "{8D0327DD-BC95-49E4-99F0-9A67A314DDF8}"
@@ -13,6 +15,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{CA6DF8
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleConfig.Tests.TestTypes", "SimplConfig.Tests.TestTypes\SimpleConfig.Tests.TestTypes.csproj", "{5D6834B2-4CF9-4878-A1BE-5C2DE0302B3A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{22656832-3664-48AD-BEA3-EDBAA54207E5}"
+	ProjectSection(SolutionItems) = preProject
+		icon.png = icon.png
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+		simple-config.nuspec = simple-config.nuspec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

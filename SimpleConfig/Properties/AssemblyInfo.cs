@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SimpleConfig")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A simple to use yet powerful configuration auto-binder")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Jon Bates")]
 [assembly: AssemblyProduct("SimpleConfig")]
 [assembly: AssemblyCopyright("Copyright © Jon Bates 2014")]
 [assembly: AssemblyTrademark("")]

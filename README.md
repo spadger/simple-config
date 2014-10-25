@@ -43,6 +43,17 @@ or even
 ServiceSettings settings = (dynamic)ConfigurationManager.GetSection("serviceSettings");
 ```
 
+##Binding to interfaces
+As of version 1.2 (Nov 2014), it is possible to bind to a pure interface (a concrete class will be create for you).  The binding copes with subinterfaces and multiple inheritence too; you just need to remember the following points:
+
+    * Your interface cannot define any methods
+    * Each property must define a getter (setters are optional)
+    * You must use implicit binding to invoke the mapper:
+
+```C#
+IServiceSettings settings = (dynamic)ConfigurationManager.GetSection("serviceSettings");
+```
+
 ##Overriding the default conventions
 If you don't mind using attributes, Simple-config does come with some a small selection of binding hints to guide the binding process.  For example, using the same xml as above, the following settings DTO could still be bound:
 

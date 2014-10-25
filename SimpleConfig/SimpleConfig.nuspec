@@ -2,24 +2,24 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>simple-config</id>
-    <version>0.1.1</version>
+    <version>1.2.0</version>
     <title>Simple Config</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <authors>Jon Bates</authors>
+    <owners>Jon Bates</owners>
     <projectUrl>https://github.com/spadger/simple-config/</projectUrl>
+	  <iconUrl>https://raw.githubusercontent.com/spadger/simple-config/master/icon.png</iconUrl>
+	  <licenseUrl>http://www.gnu.org/licenses/lgpl-3.0.txt</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Simple-config is an extensible, convention-based XML to C# binder, specifically designed to easily bind custom config sections without the need to write any config handlers or sections.  Simply by performing a cast to the required type, SimpleConfig will perform all required mapping, without the use for any magical markup</description>
-	<summary>Simple-config is an extensible, convention-based XML to C# binder, specifically designed to easily bind custom config sections without the need to write any config handlers or sections.  Simply by performing a cast to the required type, SimpleConfig will perform all required mapping, without the use for any magical markup</summary>
-    <releaseNotes>This is the first release</releaseNotes>
+    <summary>Simple-config is an extensible, convention-based XML to C# binder, specifically designed to easily bind custom config sections without the need to write any config handlers or sections.  Simply by performing a cast to the required type, SimpleConfig will perform all required mapping, without the use for any magical markup</summary>
+    <releaseNotes>This is a pretty stable release, and can bind to interfaces too</releaseNotes>
     <copyright>Copyright Jon Bates 2013-present</copyright>
     <tags>simpleconfig simple-config simple config configuration bind binding configsection configurationhandler</tags>
+    <dependencies />
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
       <frameworkAssembly assemblyName="System.Core" targetFramework="" />
       <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
     </frameworkAssemblies>
   </metadata>
-  <files>
-    <file src="bin\$configuration$\*.pdb" />
-  </files>
 </package>
