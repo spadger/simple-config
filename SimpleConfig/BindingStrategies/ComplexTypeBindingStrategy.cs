@@ -6,12 +6,6 @@ namespace SimpleConfig.BindingStrategies
 {
     public class ComplexTypeBindingStrategy : IBindingStrategy
     {
-        public ComplexTypeBindingStrategy(){}
-        public ComplexTypeBindingStrategy(string elementName)
-        {
-            ElementName = elementName;
-        }
-
         private string ElementName { get; set; }
 
         public bool Map(object parentObject, PropertyInfo destinationProperty, XmlElement element, XmlElement allConfig, ConfigMapper mapper)

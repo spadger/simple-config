@@ -51,7 +51,7 @@ namespace SimpleConfig.Helpers
             {
                 return new[] { new EnumerableBindingStrategy() };
             }
-            
+
             //This is our last chance, but also guaranteed to be complex due to the nature of IsDirectlyPopulatable
             return new[] { new ComplexTypeBindingStrategy() };
         }
