@@ -84,6 +84,12 @@ namespace SimpleConfig.Helpers
                    && @this.GetGenericTypeDefinition() == typeof (IEnumerable<>);
         }
 
+        public static bool IsNullable(this Type @this)
+        {
+            return @this.IsGenericType
+                   && @this.GetGenericTypeDefinition() == typeof(Nullable<>);
+        }
+
         public static bool IsAnInsertableSequence(this Type @this)
         {
             if (@this.IsA<Array>())

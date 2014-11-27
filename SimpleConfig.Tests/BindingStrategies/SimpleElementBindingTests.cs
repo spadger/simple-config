@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System;
+using System.Xml;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -51,6 +52,30 @@ namespace SimpleConfig.Tests.BindingStrategies
         }
 
         [Test]
+        public void AttributeBindingShouldBindDateTimes()
+        {
+            var configMapper = ConfigMapperFor(@"<bob><DateOfBirth>03/Jul/1983</DateOfBirth></bob>");
+            var result = (User)configMapper.GetObjectFromXml(typeof(User));
+            result.DateOfBirth.Should().Be(new DateTime(1983, 7, 3));
+        }
+
+        [Test]
+        public void AttributeBindingShouldBindNullableDateTimes()
+        {
+            var configMapper = ConfigMapperFor(@"<bob><Anniversary>11/Oct/2013</Anniversary></bob>");
+            var result = (User)configMapper.GetObjectFromXml(typeof(User));
+            result.Anniversary.Should().Be(new DateTime(2013, 10, 11));
+        }
+
+        [Test]
+        public void AttributeBindingShouldBindEmptyNullableDateTimes()
+        {
+            var configMapper = ConfigMapperFor(@"<bob><Anniversary /></bob>");
+            var result = (User)configMapper.GetObjectFromXml(typeof(User));
+            result.Anniversary.Should().Be(null);
+        }
+
+        [Test]
         public void ElementBindingShouldBindEnumsByCastingToInts()
         {
             var configMapper = ConfigMapperFor(@"<bob><UserType>1</UserType></bob>");
@@ -83,6 +108,8 @@ namespace SimpleConfig.Tests.BindingStrategies
             public int Age { get; set; }
             public decimal Height { get; set; }
             public float FavouriteNumber { get; set; }
+            public DateTime DateOfBirth { get; set; }
+            public DateTime? Anniversary { get; set; }
             public UserType UserType { get; set; }
         }
 

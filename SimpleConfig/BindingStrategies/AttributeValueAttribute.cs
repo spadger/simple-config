@@ -51,6 +51,17 @@ namespace SimpleConfig.BindingStrategies
                 return true;
             }
 
+            if (destinationPropertyType.IsNullable())
+            {
+                if (attributeValue == "")
+                {
+                    destinationProperty.SetValue(destinationObject, null, null);
+                    return true;
+                }
+                
+                destinationPropertyType = destinationPropertyType.GetGenericArguments()[0];
+            }
+
             if (destinationPropertyType.IsA<IConvertible>())
             {
                 var value = Convert.ChangeType(attributeValue, destinationPropertyType);

@@ -146,6 +146,20 @@ namespace SimpleConfig.Tests.Helpers
 
             result.Should().Be(isAssignable);
         }
+
+        [TestCase(typeof(Nullable<int>), true)]
+        [TestCase(typeof(int?), true)]
+        [TestCase(typeof(int), false)]
+        [TestCase(typeof(Nullable<DateTime>), true)]
+        [TestCase(typeof(DateTime?), true)]
+        [TestCase(typeof(DateTime), false)]
+        [TestCase(typeof(SomeEnum?), true)]
+        [TestCase(typeof(SomeEnum), false)]
+        [TestCase(typeof(string), false)]
+        public void IsNullable_ShouldCorrectlyIdentifyNullableTypes(Type type, bool isNullable)
+        {
+            type.IsNullable().Should().Be(isNullable);
+        }
     }
 
     public enum SomeEnum

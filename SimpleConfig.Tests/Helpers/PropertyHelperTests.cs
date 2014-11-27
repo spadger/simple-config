@@ -21,6 +21,7 @@ namespace SimpleConfig.Tests.Helpers
         [TestCase("Int", false)]
         [TestCase("String", false)]
         [TestCase("Enum", false)]
+        [TestCase("DateTime", false)]
         [TestCase("Class", true)]
         [TestCase("Interface", true)]
         [TestCase("Enumerable", true)]
@@ -31,8 +32,11 @@ namespace SimpleConfig.Tests.Helpers
         }
 
         [TestCase("Int", true)]
+        [TestCase("NullableInt", true)]
         [TestCase("String", true)]
         [TestCase("Enum", true)]
+        [TestCase("DateTime", true)]
+        [TestCase("NullableDateTime", true)]
         [TestCase("Class", false)]
         [TestCase("Interface", false)]
         [TestCase("Enumerable", false)]
@@ -95,8 +99,11 @@ namespace SimpleConfig.Tests.Helpers
     public class SomeType
     {
         public int Int { get; set; }
+        public int? NullableInt { get; set; }
         public string String { get; set; }
         public InnerEnum Enum { get; set; }
+        public DateTime DateTime { get; set; }
+        public DateTime? NullableDateTime { get; set; }
         public InnerClass Class { get; set; }
         public Interface Interface { get; set; }
         public IEnumerable Enumerable { get; set; }
