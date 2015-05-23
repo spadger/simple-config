@@ -5,8 +5,8 @@ Simple-config is an extensible, convention-based XML to C# binder, specifically 
 
 Simply by performing a cast to the required type, SimpleConfig will perform all required mapping, without the use for any magical markup
 
-#####** simple-config is available on [nuget](https://www.nuget.org/packages/simple-config/) **
-
+[![Nuget](https://img.shields.io/nuget/dt/simple-config.svg)](https://www.nuget.org/packages/simple-config/)
+[![Nuget](https://img.shields.io/nuget/v/simple-config.svg)](https://www.nuget.org/packages/simple-config/)
 [![Build status](https://ci.appveyor.com/api/projects/status/9arg9hw0admmlkox/branch/master?svg=true)](https://ci.appveyor.com/project/spadger/simple-config/branch/master)
 
 ##Simple use case
