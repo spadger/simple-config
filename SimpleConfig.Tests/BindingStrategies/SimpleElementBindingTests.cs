@@ -102,6 +102,15 @@ namespace SimpleConfig.Tests.BindingStrategies
             result.FavouriteNumber.Should().Be(1234567890123.45f);
         }
 
+        [Test]
+        public void ElementBindingShouldBindTimespan()
+        {
+            var configMapper = ConfigMapperFor(@"<bob><timeLeft>00:10:00</timeLeft></bob>");
+            var result = (User)configMapper.GetObjectFromXml(typeof(User));
+
+            result.TimeLeft.Should().Be(TimeSpan.FromMinutes(10));
+        }
+
         public class User
         {
             public string Username { get; set; }
@@ -111,6 +120,7 @@ namespace SimpleConfig.Tests.BindingStrategies
             public DateTime DateOfBirth { get; set; }
             public DateTime? Anniversary { get; set; }
             public UserType UserType { get; set; }
+            public TimeSpan TimeLeft { get; set; }
         }
 
         public enum UserType
