@@ -3,7 +3,7 @@ simple-config
 
 Simple-config is an extensible, convention-based XML to C# binder, specifically designed to easily bind custom config sections without the need to write any config handlers or sections.
 
-Simply by performing a cast to the required type, SimpleConfig will perform all required mapping, without the use for any magical markup
+Simply by performing a cast to the required type, SimpleConfig will perform all required mapping, without the use for any magical markup.
 
 [![Nuget](https://img.shields.io/nuget/dt/simple-config.svg)](https://www.nuget.org/packages/simple-config/)
 [![Nuget](https://img.shields.io/nuget/v/simple-config.svg)](https://www.nuget.org/packages/simple-config/)
@@ -88,7 +88,7 @@ Simply create a binding stratgy that implements IBindingStrategy
 /// </summary>
 public interface IBindingStrategy
 {
-    /// <param name="destinationObject">The instanc eof the object ot be populated</param>
+    /// <param name="destinationObject">The instance of the object ot be populated</param>
     /// <param name="destinationProperty">The property to be populated</param>
     /// <param name="element">The config element at the level we are mapping</param>
     /// <param name="allConfig">The entire config dom, as provided to the config handler</param>
@@ -98,7 +98,7 @@ public interface IBindingStrategy
 }
 ```
 
-In order to hook up the binding strategy, creatw a new binding attribte that inherits BaseBindingAttribute
+In order to hook up the binding strategy, create a new binding attribte that inherits BaseBindingAttribute
 
 ```C#
 [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
@@ -108,4 +108,4 @@ public abstract class BaseBindingAttribute : Attribute
 }
 ```
 
-Then attach the binding attribute to the property that requires custom binding
+Then attach the binding attribute to the property that requires custom binding.
