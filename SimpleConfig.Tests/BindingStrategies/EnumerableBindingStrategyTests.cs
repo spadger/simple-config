@@ -49,7 +49,7 @@ namespace SimpleConfig.Tests.BindingStrategies
         {
             var strategy = new EnumerableBindingStrategy();
             Action act = () => strategy.CollectionFor(GetType());
-            act.ShouldThrow<InvalidOperationException>().WithMessage("Type does not implement IEnumerable<>: SimpleConfig.Tests.BindingStrategies.EnumerableBindingStrategyTests, SimpleConfig.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+            act.ShouldThrow<InvalidOperationException>().WithMessage("Type does not implement IEnumerable<>: SimpleConfig.Tests.BindingStrategies.EnumerableBindingStrategyTests, SimpleConfig.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1c1ca59b42eb3073");
         }
 
         public class SuperList<T> : List<T>{}
