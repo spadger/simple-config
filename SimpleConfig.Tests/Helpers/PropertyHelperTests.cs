@@ -83,7 +83,7 @@ namespace SimpleConfig.Tests.Helpers
         public void GetMappingStrategies_ShouldThrowAnExceptionForNonGenericEnumerableTypeProperties(string propertyName)
         {
             Action x = ()=>PropertyNamed(propertyName).GetMappingStrategies();
-            x.ShouldThrow<ConfigMappingException>();
+            x.Should().Throw<ConfigMappingException>();
         }
 
         [Test]

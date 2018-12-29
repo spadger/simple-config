@@ -1,68 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1C7AB00C-3E70-4196-A114-DFB1D309BBC4}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleConfig</RootNamespace>
-    <AssemblyName>SimpleConfig</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFramework>net40</TargetFramework>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <PackageLicenseUrl>http://www.gnu.org/licenses/lgpl-3.0.txt</PackageLicenseUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/spadger/simple-config/master/icon.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/spadger/simple-config/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/spadger/simple-config/</RepositoryUrl>
+    <Description>Simple-config is an extensible, convention-based XML to C# binder, specifically designed to easily bind custom config sections without the need to write any config handlers or sections.  Simply by performing a cast to the required type, SimpleConfig will perform all required mapping, without the use for any magical markup</Description>
+    <Authors>Jon Bates</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageTags>simpleconfig simple-config simple config configuration bind binding configsection configurationhandler</PackageTags>
+    <Copyright>Jon Bates</Copyright>
+    <PackageId>simple-config</PackageId>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BindingStrategies\ComplexTypeBindingStrategy.cs" />
-    <Compile Include="BindingStrategies\CustomBindingStrategyAttribute.cs" />
-    <Compile Include="BindingStrategies\EnumerableBindingStrategy.cs" />
-    <Compile Include="ConfigMapper.cs" />
-    <Compile Include="ConfigMappingException.cs" />
-    <Compile Include="BindingStrategies\BaseBindingAttribute.cs" />
-    <Compile Include="BindingStrategies\ElementValueAttribute.cs" />
-    <Compile Include="BindingStrategies\AttributeValueAttribute.cs" />
-    <Compile Include="BindingStrategies\IBindingStrategy.cs" />
-    <Compile Include="Helpers\TypeGenerator.cs" />
-    <Compile Include="Helpers\XmlElementHelper.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Helpers\TypeHelper.cs" />
-    <Compile Include="Helpers\PropertyHelper.cs" />
-    <Compile Include="SimpleConfigHandler.cs" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

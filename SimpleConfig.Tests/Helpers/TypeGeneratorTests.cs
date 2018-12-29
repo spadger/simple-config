@@ -13,21 +13,21 @@ namespace SimpleConfig.Tests.Helpers
         public void ValidateRequestedType_WhenTargetIsNotAnInterface_ShouldThrow()
         {
             Action x = () => ConcreteTypeGenerator.ValidateRequestedType(typeof(object));
-            x.ShouldThrow<ConfigMappingException>().WithMessage("requested type is not an interface");
+            x.Should().Throw<ConfigMappingException>().WithMessage("requested type is not an interface");
         }
 
         [Test]
         public void ValidateRequestedType_WhenTargetInterfaceContainsAMethod_ShouldThrow()
         {
             Action x = () => ConcreteTypeGenerator.ValidateRequestedType(typeof(WithMethod));
-            x.ShouldThrow<ConfigMappingException>().WithMessage("requested type may not have methods");
+            x.Should().Throw<ConfigMappingException>().WithMessage("requested type may not have methods");
         }
 
         [Test]
         public void ValidateRequestedType_WhenTargetInterfaceContainsANonReadableProperty_ShouldThrow()
         {
             Action x = () => ConcreteTypeGenerator.ValidateRequestedType(typeof(NoGetter));
-            x.ShouldThrow<ConfigMappingException>().WithMessage("write-only properties are not supported");
+            x.Should().Throw<ConfigMappingException>().WithMessage("write-only properties are not supported");
         }
 
         [Test]

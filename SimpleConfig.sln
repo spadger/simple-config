@@ -1,27 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
+MinimumVisualStudioVersion = 15.0.0.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleConfig", "SimpleConfig\SimpleConfig.csproj", "{1C7AB00C-3E70-4196-A114-DFB1D309BBC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleConfig.Tests", "SimpleConfig.Tests\SimpleConfig.Tests.csproj", "{8D0327DD-BC95-49E4-99F0-9A67A314DDF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConfig.Tests", "SimpleConfig.Tests\SimpleConfig.Tests.csproj", "{8D0327DD-BC95-49E4-99F0-9A67A314DDF8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{CA6DF84F-6672-405C-93EE-0EA0531684D8}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleConfig.Tests.TestTypes", "SimplConfig.Tests.TestTypes\SimpleConfig.Tests.TestTypes.csproj", "{5D6834B2-4CF9-4878-A1BE-5C2DE0302B3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConfig.Tests.TestTypes", "SimplConfig.Tests.TestTypes\SimpleConfig.Tests.TestTypes.csproj", "{5D6834B2-4CF9-4878-A1BE-5C2DE0302B3A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{22656832-3664-48AD-BEA3-EDBAA54207E5}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		icon.png = icon.png
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
-		simple-config.nuspec = simple-config.nuspec
 	EndProjectSection
 EndProject
 Global
@@ -45,5 +38,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1AED4EDA-03CA-4BDE-9804-7D8223250327}
 	EndGlobalSection
 EndGlobal

@@ -16,7 +16,7 @@ namespace SimpleConfig.Tests.BindingStrategies
         public void CollectionFor_NonGenericInterfaceTypesShouldNotBeSupported(Type requested, Type expectedInstanceType)
         {
             Action action = ()=>new EnumerableBindingStrategy().CollectionFor(requested);
-            action.ShouldThrow<InvalidOperationException>();
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [TestCase(typeof(IEnumerable<string>), typeof(List<string>))]
@@ -49,7 +49,7 @@ namespace SimpleConfig.Tests.BindingStrategies
         {
             var strategy = new EnumerableBindingStrategy();
             Action act = () => strategy.CollectionFor(GetType());
-            act.ShouldThrow<InvalidOperationException>().WithMessage("Type does not implement IEnumerable<>: SimpleConfig.Tests.BindingStrategies.EnumerableBindingStrategyTests, SimpleConfig.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+            act.Should().Throw<InvalidOperationException>().WithMessage("Type does not implement IEnumerable<>: SimpleConfig.Tests.BindingStrategies.EnumerableBindingStrategyTests, SimpleConfig.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
         }
 
         public class SuperList<T> : List<T>{}
